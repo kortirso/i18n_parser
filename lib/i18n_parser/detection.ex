@@ -5,6 +5,8 @@ defmodule I18nParser.Detection do
 
   alias I18nParser.Detection
 
+  use Detection.Extensions
+
   defstruct file: nil
 
   @doc """
@@ -24,5 +26,23 @@ defmodule I18nParser.Detection do
 
   def new(file) do
     %Detection{file: file}
+  end
+
+  @doc """
+  Detects locale
+
+  ## Examples
+
+      iex> detector |> I18nParser.Detection.detect()
+      {:ok, %{code: "en"}}
+
+  """
+  @spec detect(%Detection{file: String.t()}) :: {:ok, %{code: String.t(), name: String.t()}}
+
+  def detect(%Detection{file: file}) do
+    file
+    |> String.split(".")
+    |> Enum.at(-1)
+    |> detect_locale(file)
   end
 end
