@@ -8,7 +8,7 @@ defmodule I18nParser.MixProject do
   def project do
     [
       app: :i18n_parser,
-      version: "0.1.2",
+      version: "0.1.3",
       elixir: "~> 1.7",
       name: "I18nParser",
       description: @description,
