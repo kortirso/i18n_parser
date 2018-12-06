@@ -15,6 +15,6 @@ defmodule I18nParser.DetectionTest do
   test "detect locale, for invalid file" do
     file = File.cwd! |> Path.join("test/fixtures/invalid.yml")
 
-    assert {:error, "Invalid format of locale"} = file |> Detection.detect("yml")
+    assert {:error, "Invalid amount of keys"} = file |> Detection.detect("yml")
   end
 end

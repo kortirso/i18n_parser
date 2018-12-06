@@ -26,7 +26,11 @@ defmodule I18nParser.Detection do
   @spec detect(String.t(), String.t()) :: {:ok, %{code: String.t()}}
 
   def detect(file, extension) do
-    file
-    |> detect_locale(extension)
+    try do
+      file
+      |> detect_locale(extension)
+    rescue
+      error -> {:error, error.message}
+    end
   end
 end
