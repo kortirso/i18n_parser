@@ -7,42 +7,26 @@ defmodule I18nParser.Detection do
 
   use Detection.Extensions
 
-  defstruct file: nil
+  defstruct file: nil, extension: nil
 
   @doc """
-  Creates detector
+  Detects locale for the file
 
   ## Parameters
 
     - file: path to file for locale detection
+    - extension: extension of the file
 
   ## Examples
 
-      iex> detector = "/en.yml" |> I18nParser.Detection.new()
-      %I18nParser.Detection{file: "/en.yml"}
-
-  """
-  @spec new(String.t()) :: %Detection{file: String.t()}
-
-  def new(file) do
-    %Detection{file: file}
-  end
-
-  @doc """
-  Detects locale
-
-  ## Examples
-
-      iex> detector |> I18nParser.Detection.detect()
+      iex> I18nParser.Detection.detect("/some_path_to_file", "yml")
       {:ok, %{code: "en"}}
 
   """
-  @spec detect(%Detection{file: String.t()}) :: {:ok, %{code: String.t(), name: String.t()}}
+  @spec detect(String.t(), String.t()) :: {:ok, %{code: String.t()}}
 
-  def detect(%Detection{file: file}) do
+  def detect(file, extension) do
     file
-    |> String.split(".")
-    |> Enum.at(-1)
-    |> detect_locale(file)
+    |> detect_locale(extension)
   end
 end

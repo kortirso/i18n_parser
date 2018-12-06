@@ -5,7 +5,7 @@ defmodule I18nParser.Detection.Extensions do
 
   defmacro __using__(_opts) do
     quote do
-      defp detect_locale(extension, file) when extension == "yml" do
+      defp detect_locale(file, extension) when extension == "yml" do
         {:ok, yml} = file |> YamlElixir.read_from_file()
         keys = yml |> Map.keys()
         if length(keys) != 1, do: raise "Invalid amount of keys"
