@@ -3,18 +3,47 @@ defmodule I18nParser.DetectionTest do
 
   alias I18nParser.Detection
 
-  setup_all do
-    file = File.cwd! |> Path.join("test/fixtures/en.yml")
-    {:ok, file: file, extension: "yml"}
+  test "returns error for unexisted file" do
+    file = File.cwd! |> Path.join("test/fixtures/something.yml")
+
+    assert {:error, "File is not available"} = file |> Detection.detect("yml")
   end
 
-  test "detect locale", state do
-    assert {:ok, %{code: "en"}} = state[:file] |> Detection.detect(state[:extension])
-  end
+  describe "YML detection" do
+    test "detects locale" do
+      file = File.cwd! |> Path.join("test/fixtures/en.yml")
 
-  test "detect locale, for invalid file" do
-    file = File.cwd! |> Path.join("test/fixtures/invalid.yml")
+      assert {:ok, %{code: "en"}} = file |> Detection.detect("yml")
+    end
 
-    assert {:error, "Invalid amount of keys"} = file |> Detection.detect("yml")
+    test "returns error for unsupported extension" do
+      file = File.cwd! |> Path.join("test/fixtures/en.yml")
+
+      assert {:error, "Unsupported file format"} = file |> Detection.detect("")
+    end
+
+    test "returns error for invalid file" do
+      file = File.cwd! |> Path.join("test/fixtures/invalid.yml")
+
+      assert {:error, "Invalid amount of keys"} = file |> Detection.detect("yml")
+    end
+
+    test "returns error for invalid locale format" do
+      file = File.cwd! |> Path.join("test/fixtures/invalid_format.yml")
+
+      assert {:error, "Invalid format of locale"} = file |> Detection.detect("yml")
+    end
+
+    test "returns error for not yml file" do
+      file = File.cwd! |> Path.join("test/fixtures/strings.xml")
+
+      assert {:error, "YML structure error"} = file |> Detection.detect("yml")
+    end
+
+    test "returns error if locale is not string" do
+      file = File.cwd! |> Path.join("test/fixtures/locale_is_not_string.yml")
+
+      assert {:error, "Locale is not string"} = file |> Detection.detect("yml")
+    end
   end
 end
