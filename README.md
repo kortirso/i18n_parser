@@ -10,7 +10,7 @@ by adding `i18n_parser` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:i18n_parser, "~> 0.1.3"}
+    {:i18n_parser, "~> 0.1.4"}
   ]
 end
 ```
