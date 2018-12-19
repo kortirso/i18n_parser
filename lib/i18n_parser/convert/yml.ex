@@ -1,11 +1,11 @@
-defmodule I18nParser.Converter.Yml do
+defmodule I18nParser.Convert.Yml do
   @moduledoc """
-  Module for converting data of the YML files
+  Module for reading data from YML file
   """
 
   defmacro __using__(_opts) do
     quote do
-      defp process_yml_file(file) do
+      defp do_convert_yml(file) do
         case YamlElixir.read_from_file(file) do
           {:ok, yml} -> extract_data(yml)
           _ -> {:error, "Invalid YML format"}

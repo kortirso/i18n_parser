@@ -1,11 +1,11 @@
-defmodule I18nParser.Detection.Yml do
+defmodule I18nParser.Detect.Yml do
   @moduledoc """
   Module for detecting locale of the YML files
   """
 
   defmacro __using__(_opts) do
     quote do
-      defp process_yml_file(file) do
+      defp do_detect_yml(file) do
         case YamlElixir.read_from_file(file) do
           {:ok, yml} -> detect_locale(yml)
           _ -> {:error, "Invalid YML format"}
