@@ -6,9 +6,9 @@ defmodule I18nParser.Detect.Yml do
   defmacro __using__(_opts) do
     quote do
       defp do_detect_yml(file) do
-        case YamlElixir.read_from_file(file) do
+        case Yml.read_from_file(file) do
           {:ok, yml} -> detect_locale(yml)
-          _ -> {:error, "Invalid YML format"}
+          result -> result
         end
       end
 
@@ -33,17 +33,11 @@ defmodule I18nParser.Detect.Yml do
         end
       end
 
-      defp detect_locale(_) do
-        {:error, "YML structure error"}
-      end
+      defp detect_locale(_), do: {:error, "YML structure error"}
 
-      defp is_simple_format(locale) do
-        String.length(locale) == 2
-      end
+      defp is_simple_format(locale), do: String.length(locale) == 2
 
-      defp is_compound_format(locale) do
-        String.length(locale) == 5 && String.at(locale, 2) == "-"
-      end
+      defp is_compound_format(locale), do: String.length(locale) == 5 && String.at(locale, 2) == "-"
     end
   end
 end

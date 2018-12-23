@@ -4,7 +4,7 @@ defmodule I18nParserTest do
   test "returns error for unexisted file" do
     file = File.cwd! |> Path.join("test/fixtures/something.yml")
 
-    assert {:error, "File is not available"} = file |> I18nParser.detect("yml")
+    assert {:error, "File reading error"} = file |> I18nParser.detect("yml")
   end
 
   describe "YML I18nParser" do

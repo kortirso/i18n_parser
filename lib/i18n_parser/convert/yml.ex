@@ -6,9 +6,9 @@ defmodule I18nParser.Convert.Yml do
   defmacro __using__(_opts) do
     quote do
       defp do_convert_yml(file) do
-        case YamlElixir.read_from_file(file) do
+        case Yml.read_from_file(file) do
           {:ok, yml} -> extract_data(yml)
-          _ -> {:error, "Invalid YML format"}
+          result -> result
         end
       end
 
@@ -28,9 +28,7 @@ defmodule I18nParser.Convert.Yml do
       end
 
       # use recursion to find real values for translation
-      defp check_value_type(%{} = value, sentences) do
-        convert_data(value, %{}, sentences)
-      end
+      defp check_value_type(%{} = value, sentences), do: convert_data(value, %{}, sentences)
 
       # convert value to by template
       # add data to translations list

@@ -28,7 +28,7 @@ defmodule I18nParser.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.19", only: :dev},
-      {:yaml_elixir, "~> 2.1.0"}
+      {:yml, "0.9.1"}
     ]
   end
 

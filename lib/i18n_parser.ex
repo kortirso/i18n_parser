@@ -26,12 +26,7 @@ defmodule I18nParser do
   """
   @spec detect(String.t(), String.t()) :: {:ok, %{code: String.t()}}
 
-  def detect(file, extension) do
-    case File.read(file) do
-      {:ok, _} -> do_detect(file, extension)
-      _ -> {:error, "File is not available"}
-    end    
-  end
+  def detect(file, extension), do: do_detect(file, extension)
 
   defp do_detect(file, "yml"), do: do_detect_yml(file)
   defp do_detect(_, _), do: {:error, "Unsupported file format"}
@@ -59,12 +54,7 @@ defmodule I18nParser do
   """
   @spec convert(String.t(), String.t()) :: {:ok, %{}}
 
-  def convert(file, extension) do
-    case File.read(file) do
-      {:ok, _} -> do_convert(file, extension)
-      _ -> {:error, "File is not available"}
-    end
-  end
+  def convert(file, extension), do: do_convert(file, extension)
 
   defp do_convert(file, "yml"), do: do_convert_yml(file)
   defp do_convert(_, _), do: {:error, "Unsupported file format"}
