@@ -3,10 +3,8 @@ defmodule I18nParser do
   Module for parsing i18n files
   """
 
-  alias I18nParser.{Detect, Convert}
-
-  use Detect.Yml
-  use Convert.Yml
+  use I18nParser.Detect.Yml
+  use I18nParser.Convert.Yml
 
   defstruct file: nil, extension: nil
 
