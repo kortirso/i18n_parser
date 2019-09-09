@@ -5,14 +5,14 @@ defmodule I18nParser.Detect.Yml do
 
   defmacro __using__(_opts) do
     quote do
-      defp do_detect_yml(file) do
+      defp do_yml_detect(file) do
         case Yml.read_from_file(file) do
-          {:ok, yml} -> detect_locale(yml)
+          {:ok, yml} -> detect_yml_locale(yml)
           result -> result
         end
       end
 
-      defp detect_locale(%{} = yml) do
+      defp detect_yml_locale(%{} = yml) do
         keys = Map.keys(yml)
         locale = Enum.at(keys, 0)
         cond do
@@ -33,7 +33,7 @@ defmodule I18nParser.Detect.Yml do
         end
       end
 
-      defp detect_locale(_), do: {:error, "YML structure error"}
+      defp detect_yml_locale(_), do: {:error, "YML structure error"}
 
       defp is_simple_format(locale), do: String.length(locale) == 2
 

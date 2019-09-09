@@ -1,13 +1,13 @@
-defmodule I18nParserTest do
+defmodule YmlTest do
   use ExUnit.Case
 
-  test "returns error for unexisted file" do
+  test "yml, returns error for unexisted file" do
     file = File.cwd! |> Path.join("test/fixtures/something.yml")
 
     assert {:error, "File reading error"} = file |> I18nParser.detect("yml")
   end
 
-  describe "YML I18nParser" do
+  describe "YML detection" do
     test "detects locale" do
       file = File.cwd! |> Path.join("test/fixtures/en.yml")
 
@@ -45,8 +45,8 @@ defmodule I18nParserTest do
     end
   end
 
-  describe "YML detection" do
-    test "detects locale" do
+  describe "YML converting" do
+    test "converts data" do
       file = File.cwd! |> Path.join("test/fixtures/en.yml")
 
       assert {:ok, converted_data, sentences} = file |> I18nParser.convert("yml")

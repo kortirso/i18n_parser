@@ -4,9 +4,8 @@ defmodule I18nParser do
   """
 
   use I18nParser.Detect.Yml
+  use I18nParser.Detect.Json
   use I18nParser.Convert.Yml
-
-  defstruct file: nil, extension: nil
 
   @doc """
   Detects locale for the file
@@ -26,7 +25,8 @@ defmodule I18nParser do
 
   def detect(file, extension), do: do_detect(file, extension)
 
-  defp do_detect(file, "yml"), do: do_detect_yml(file)
+  defp do_detect(file, "yml"), do: do_yml_detect(file)
+  defp do_detect(file, "json"), do: do_json_detect(file)
   defp do_detect(_, _), do: {:error, "Unsupported file format"}
 
   @doc """

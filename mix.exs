@@ -28,7 +28,10 @@ defmodule I18nParser.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.19", only: :dev},
-      {:yml, "0.9.1"}
+      # working with yml files
+      {:yml, "0.9.1"},
+      # working with json files
+      {:poison, "~> 3.1"}
     ]
   end
 
