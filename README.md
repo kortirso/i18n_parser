@@ -10,7 +10,7 @@ by adding `i18n_parser` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:i18n_parser, "~> 0.1.8"}
+    {:i18n_parser, "~> 0.1.9"}
   ]
 end
 ```
@@ -18,4 +18,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/i18n_parser](https://hexdocs.pm/i18n_parser).
-
