@@ -5,14 +5,25 @@ defmodule I18nParser.Detect.Json do
 
   defmacro __using__(_opts) do
     quote do
-      defp do_detect_json(file) do
+      # detect json locale by inner content
+      defp do_detect_json(file, true) do
         with {:ok, body} <- File.read(file),
-             {:ok, json} <- Poison.decode(body),
-             {:ok, result} <- detect_json_locale(json) do
-               {:ok, result}
+             {:ok, json} <- Poison.decode(body) do
+               detect_json_locale(json)
         else
-          {:locale_error, error_value} -> detect_json_locale_by_filename(file, error_value)
           _ -> {:error, "File reading error"}
+        end
+      end
+
+      # detect json locale by file name
+      defp do_detect_json(file, false) do
+        locale_from_file = get_locale_from_filename(file)
+        cond do
+          is_simple_format(locale_from_file) ->
+            {:ok, %{code: locale_from_file}}
+
+          true ->
+            {:error, "File name does not contain locale"}
         end
       end
 
@@ -21,27 +32,16 @@ defmodule I18nParser.Detect.Json do
         locale = Enum.at(keys, 0)
         cond do
           length(keys) != 1 ->
-            {:locale_error, "Invalid amount of keys"}
+            {:error, "Invalid amount of keys"}
 
           is_binary(locale) == false ->
-            {:locale_error, "Locale is not string"}
+            {:error, "Locale is not string"}
 
           is_simple_format(locale) ->
             {:ok, %{code: locale}}
 
           true ->
-            {:locale_error, "Invalid format of locale"}
-        end
-      end
-
-      defp detect_json_locale_by_filename(file, error_value) do
-        locale_from_file = get_locale_from_filename(file)
-        cond do
-          is_simple_format(locale_from_file) ->
-            {:ok, %{code: locale_from_file}}
-
-          true ->
-            {:error, error_value}
+            {:error, "Invalid format of locale"}
         end
       end
 

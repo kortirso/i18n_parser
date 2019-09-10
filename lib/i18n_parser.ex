@@ -12,16 +12,17 @@ defmodule I18nParser do
 
     - file: path to file for locale detection
     - extension: extension of the file, like "yml"
+    - options: options for detection
 
   ## Examples
 
-      iex> I18nParser.detect("/some_path_to_file", "yml")
+      iex> I18nParser.detect("/some_path_to_file", "yml", options)
       {:ok, %{code: "en"}}
 
   """
   @spec detect(String.t(), String.t()) :: {:ok, %{code: String.t()}}
 
-  def detect(file, extension), do: do_detect(file, extension)
+  def detect(file, extension, options \\ %{}) when is_map(options), do: do_detect(file, extension, options)
 
   @doc """
   Convert data from file
@@ -30,10 +31,11 @@ defmodule I18nParser do
 
     - file: path to file for locale detection
     - extension: extension of the file, like "yml"
+    - options: options for converting
 
   ## Examples
 
-      iex> I18nParser.convert("/some_path_to_file", "yml")
+      iex> I18nParser.convert("/some_path_to_file", "yml", options)
       {
         :ok,
         %{
@@ -46,5 +48,5 @@ defmodule I18nParser do
   """
   @spec convert(String.t(), String.t()) :: {:ok, %{}}
 
-  def convert(file, extension), do: do_convert(file, extension)
+  def convert(file, extension, options \\ %{}) when is_map(options), do: do_convert(file, extension, options)
 end

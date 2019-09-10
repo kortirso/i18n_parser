@@ -7,7 +7,7 @@ defmodule I18nParser.Detect do
   use Yml
   use Json
 
-  def do_detect(file, "yml"), do: do_detect_yml(file)
-  def do_detect(file, "json"), do: do_detect_json(file)
-  def do_detect(_, _), do: {:error, "Unsupported file format"}
+  def do_detect(file, "yml", _), do: do_detect_yml(file)
+  def do_detect(file, "json", %{by_content: by_content}), do: do_detect_json(file, by_content)
+  def do_detect(_, _, _), do: {:error, "Unsupported file format"}
 end
