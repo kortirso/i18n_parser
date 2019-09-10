@@ -34,10 +34,17 @@ defmodule JsonTest do
   end
 
   describe "JSON converting" do
-    test "converts data" do
+    test "converts data, data without locale" do
       file = File.cwd! |> Path.join("test/fixtures/de.json")
 
       assert {:ok, converted_data, sentences} = file |> I18nParser.convert("json", %{data_with_locale: false})
+      assert %{} = converted_data
+    end
+
+    test "converts data, data with locale" do
+      file = File.cwd! |> Path.join("test/fixtures/data.json")
+
+      assert {:ok, converted_data, sentences} = file |> I18nParser.convert("json", %{data_with_locale: true})
       assert %{} = converted_data
     end
 
