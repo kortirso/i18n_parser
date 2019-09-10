@@ -3,9 +3,7 @@ defmodule I18nParser do
   Module for parsing i18n files
   """
 
-  use I18nParser.Detect.Yml
-  use I18nParser.Detect.Json
-  use I18nParser.Convert.Yml
+  import I18nParser.{Detect, Convert}
 
   @doc """
   Detects locale for the file
@@ -24,10 +22,6 @@ defmodule I18nParser do
   @spec detect(String.t(), String.t()) :: {:ok, %{code: String.t()}}
 
   def detect(file, extension), do: do_detect(file, extension)
-
-  defp do_detect(file, "yml"), do: do_yml_detect(file)
-  defp do_detect(file, "json"), do: do_json_detect(file)
-  defp do_detect(_, _), do: {:error, "Unsupported file format"}
 
   @doc """
   Convert data from file
@@ -53,7 +47,4 @@ defmodule I18nParser do
   @spec convert(String.t(), String.t()) :: {:ok, %{}}
 
   def convert(file, extension), do: do_convert(file, extension)
-
-  defp do_convert(file, "yml"), do: do_convert_yml(file)
-  defp do_convert(_, _), do: {:error, "Unsupported file format"}
 end

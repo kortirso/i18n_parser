@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - poison package
 - json detection
 
+### Modified
+- inner module structure
+
 ### Fixed
 - yml detection
 - tests

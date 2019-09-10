@@ -5,7 +5,7 @@ defmodule I18nParser.Detect.Json do
 
   defmacro __using__(_opts) do
     quote do
-      defp do_json_detect(file) do
+      defp do_detect_json(file) do
         with {:ok, body} <- File.read(file),
              {:ok, json} <- Poison.decode(body),
              {:ok, result} <- detect_json_locale(json) do

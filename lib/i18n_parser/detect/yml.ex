@@ -5,7 +5,7 @@ defmodule I18nParser.Detect.Yml do
 
   defmacro __using__(_opts) do
     quote do
-      defp do_yml_detect(file) do
+      defp do_detect_yml(file) do
         case Yml.read_from_file(file) do
           {:ok, yml} -> detect_yml_locale(yml)
           result -> result
