@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - poison package
 - json detection
+- json converting
 
 ### Modified
 - inner module structure

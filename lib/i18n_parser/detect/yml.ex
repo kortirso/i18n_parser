@@ -35,8 +35,6 @@ defmodule I18nParser.Detect.Yml do
 
       defp detect_yml_locale(_), do: {:error, "YML structure error"}
 
-      defp is_simple_format(locale), do: String.length(locale) == 2
-
       defp is_compound_format(locale), do: String.length(locale) == 5 && String.at(locale, 2) == "-"
     end
   end
