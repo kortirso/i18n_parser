@@ -17,7 +17,7 @@ defmodule JsonTest do
     test "detects locale by file name" do
       file = File.cwd! |> Path.join("test/fixtures/de.json")
 
-      assert {:ok, %{code: "de"}} = file |> I18nParser.detect("json", %{data_with_locale: false})
+      assert {:ok, %{code: "de"}} = file |> I18nParser.detect("json", %{data_with_locale: false, filename: "de.json"})
     end
 
     test "returns error for unsupported extension" do

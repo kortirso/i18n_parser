@@ -6,7 +6,7 @@ defmodule I18nParser.Detect.Json do
   defmacro __using__(_opts) do
     quote do
       # detect json locale by inner content
-      defp do_detect_json(file, true) do
+      defp do_detect_json(file, %{data_with_locale: true}) do
         with {:ok, body} <- File.read(file),
              {:ok, json} <- Poison.decode(body) do
                detect_json_locale(json)
@@ -15,12 +15,25 @@ defmodule I18nParser.Detect.Json do
         end
       end
 
-      # detect json locale by file name
-      defp do_detect_json(file, false) do
-        locale_from_file = get_locale_from_filename(file)
+      # detect json locale by short file name
+      defp do_detect_json(_, %{data_with_locale: false, filename: filename}) when is_binary(filename) do
+        filename
+        |> get_locale_from_string()
+        |> do_detect_json()
+      end
+
+      # detect json locale by long file name
+      defp do_detect_json(file, %{data_with_locale: false, filename: nil}) do
+        file
+        |> get_locale_from_filename()
+        |> do_detect_json()
+      end
+
+      # check locale
+      defp do_detect_json(value) when is_binary(value) do
         cond do
-          is_simple_format(locale_from_file) ->
-            {:ok, %{code: locale_from_file}}
+          is_simple_format(value) ->
+            {:ok, %{code: value}}
 
           true ->
             {:error, "File name does not contain locale"}
@@ -46,7 +59,11 @@ defmodule I18nParser.Detect.Json do
       end
 
       defp get_locale_from_filename(file) do
-        file |> String.split("/") |> Enum.at(-1) |> String.split(".") |> Enum.at(0)
+        file |> String.split("/") |> Enum.at(-1) |> get_locale_from_string()
+      end
+
+      defp get_locale_from_string(value) do
+        value |> String.split(".") |> Enum.at(0)
       end
     end
   end
